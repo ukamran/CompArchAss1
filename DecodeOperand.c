@@ -196,26 +196,7 @@ void w_or_b(char WB, char* decoded_wb) {
 
 
 }
-/*
-char w_or_b[2](char WB, char* decoded_wb) {
-	char *sub[2];
-	switch (WB) {
-	case("0"):
-		sub = ".w";
-		break;
-	case("1"):
-		sub = ".b";
-		break;
-	default:
-		sub = "er";
-		break;
-	}
-	
-	for (int i = 0; i < 2; ++i) {
-		decoded_wb[i] = sub[i];
-	}
-}
-**/
+
 void decode_opset1(char input_instr[], char input_binary[16]) {
 
 	// Store the register or constant bit.
@@ -260,4 +241,91 @@ void decode_opset1(char input_instr[], char input_binary[16]) {
 
 }
 
+//group 11: swpb/sxt
+void decode_opsetg11(char input_instr[], char input_binary[16]) {
 
+	//Store the Destination bits
+	char D[4] = { input_binary[13],input_binary[14],input_binary[15],0 };
+
+	//declare decoded vars
+	char decoded_dreg[3];
+	char decoded_instr[13];
+
+
+	//store the destination register
+	decode_reg(D, decoded_dreg);
+
+	//construct instruction
+	sprintf(decoded_instr, "%s %s", input_instr, decoded_dreg);
+
+	printf(decoded_instr);
+
+
+}
+
+
+//group 12: swap
+void decode_opsetg12(char input_instr[], char input_binary[16]) {
+
+	//Store the Destination bits
+	char D[4] = { input_binary[13],input_binary[14],input_binary[15],0 };
+	//Store the SC bits
+	char SC[4] = { input_binary[10],input_binary[11],input_binary[12],0 };
+
+	//declare decoded vars
+	char decoded_dreg[3];
+	char decoded_sreg[3];
+	char decoded_instr[13];
+
+
+	//store the destination register
+	decode_reg(D, decoded_dreg);
+
+	//store the source register
+	decode_reg(SC, decoded_sreg);
+
+
+	//construct instruction
+	sprintf(decoded_instr, "%s %s,%s", input_instr, decoded_sreg, decoded_dreg);
+
+	printf(decoded_instr);
+
+
+}
+
+
+//group 13: mov. example: mov.b Rsource,Rdest
+void decode_opsetg23(char input_instr[], char input_binary[16]) {
+
+	//Store the Destination bits
+	char D[4] = { input_binary[13],input_binary[14],input_binary[15],0 };
+	//Store the SC bits
+	char SC[4] = { input_binary[10],input_binary[11],input_binary[12],0 };
+	//Store the word or byte bit.
+	char WB = input_binary[9];
+
+	//declare decoded vars
+	char decoded_dreg[3];
+	char decoded_sreg[3];
+	char decoded_wb[2];
+	char decoded_instr[13];
+
+
+	//store the destination register
+	decode_reg(D, decoded_dreg);
+
+	//store the source register
+	decode_reg(SC, decoded_sreg);
+
+	//word or byte instruction
+	w_or_b(WB, decoded_wb);
+	strcat(input_instr, decoded_wb);
+
+
+	//construct instruction
+	sprintf(decoded_instr, "%s %s,%s", input_instr, decoded_sreg, decoded_dreg);
+
+	printf(decoded_instr);
+
+
+}

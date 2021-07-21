@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include "Chk_SRec.h"
 #include "Output_File.h"
+#include "Instr.h"
 
 #define DISPLAY_BYTE /* Remove comments '//' to display contents of S1 and S9 records */
 int hextodc(char* hex) {
@@ -101,7 +102,7 @@ case '0': /* Source filename */
 		sscanf_s(&srec[pos], "%2x", &byte);
 		printf("This is the byte: %d", byte);
 		//char parsedRecord[] = "Cool.";
-		output_file(byte);
+		//output_file(byte);
 		chksum += CHAR_MASK(byte);
 		pos += 2;
 	}

@@ -301,7 +301,7 @@ void decode_assembly(int low, int high) {
 
 	const char *inst[] = { "BL","BRA","CEX","SETPRI","SVC","SETCC","CLRCC","ADD","ADDC","SUB","SUBC","DADD","CMP",
 		"XOR","AND","BIT","BIC","BIS","MOV","SWAP","SRA","RRC","SWPB","SXT","LD","ST","MOVL",
-		"MOVLZ","MOVLS","MOVH","LDR","STR" };
+		"MOVLZ","MOVLS","MOVH","LDR","STR",0 };
 	
 	//printf("Sanity check!");
 	//int first_char = 9;
@@ -344,9 +344,59 @@ void decode_assembly(int low, int high) {
 	};
 
 	char opset1[4];
+	char opsetg13[4];
+	char opsetg10[4];
+	char opsetg11[4];
+	char opsetg12[4];
+	char opsetg23[4];
+	char opsetg3[4];
+	char opsetg4[4];
+	char opsetg5[4];
+	char opsetg6[4];
+
+
+
+
 	if (instr_from_arr == 7 || instr_from_arr == 8 || instr_from_arr == 9 || instr_from_arr == 10 || instr_from_arr == 11 || instr_from_arr == 12 || instr_from_arr == 13 || instr_from_arr == 14
 		|| instr_from_arr == 15 || instr_from_arr == 16 || instr_from_arr == 17) {
 		strcpy(opset1, inst[instr_from_arr]);
 		decode_opset1(opset1, bin_total);
 	}
+	else if (instr_from_arr == 26 || instr_from_arr == 27 || instr_from_arr == 28 || instr_from_arr == 29) { //movl, movlz, movls, movh decoding
+		strcpy(opsetg13, inst[instr_from_arr]);
+		decode_opsetg13(opsetg13, bin_total);
+		}
+	else if (instr_from_arr == 20 || instr_from_arr == 21) {
+		strcpy(opsetg10, inst[instr_from_arr]);
+		decode_opsetg10(opsetg10, bin_total);
+	}
+	else if (instr_from_arr == 22 || instr_from_arr == 23) { //swpb, sxt
+		strcpy(opsetg11, inst[instr_from_arr]);
+		decode_opsetg11(opsetg11, bin_total);
+	}
+	else if (instr_from_arr == 19) { //swap
+		strcpy(opsetg12, inst[instr_from_arr]);
+		decode_opsetg12(opsetg12, bin_total);
+	}
+	else if (instr_from_arr == 18) { //mov
+		strcpy(opsetg23, inst[instr_from_arr]);
+		decode_opsetg23(opsetg23, bin_total);
+	}
+	else if (instr_from_arr == 2) { //cex
+		strcpy(opsetg3, inst[instr_from_arr]);
+		decode_opsetg3(opsetg3, bin_total);
+	}
+	else if (instr_from_arr == 3) { //setpri
+		strcpy(opsetg4, inst[instr_from_arr]);
+		decode_opsetg4(opsetg4, bin_total);
+	}
+	else if (instr_from_arr == 4) { //svc
+		strcpy(opsetg5, inst[instr_from_arr]);
+		decode_opsetg5(opsetg5, bin_total);
+	}
+	else if (instr_from_arr == 5 || instr_from_arr == 6) { //setcc, clrcc
+		strcpy(opsetg6, inst[instr_from_arr]);
+		decode_opsetg6(opsetg6, bin_total);
+	}
+
 }
