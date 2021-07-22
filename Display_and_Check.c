@@ -54,6 +54,7 @@ void display_and_check_srec(char* srec)
  */
 unsigned int length;
 unsigned int ah, al, address;
+unsigned int starting_address;
 unsigned int byte;
 unsigned int chksum;
 unsigned int pos;
@@ -62,6 +63,7 @@ unsigned int i;
 //added this just now
 unsigned int arr_count;
 unsigned int counter;
+unsigned int addr; 
 
 unsigned int s1_arr[20];
 unsigned int s1_arrass[2];
@@ -113,6 +115,7 @@ case '1': /* Data (Instruction or data) record */
 	counter = 0;
 
 	printf("Address: %04x: ", address);
+	starting_address = address;
 	for (i = 0; i <= length; i++)
 	{
 		sscanf_s(&srec[pos], "%2x", &byte);
@@ -151,7 +154,7 @@ case '1': /* Data (Instruction or data) record */
 
 				//decode_assembly(s1_arrass[1], s1_arrass[0]);
 				printf("#%04x", address);
-				decode_assembly(s1_arrass[1], s1_arrass[0]);
+				decode_assembly(s1_arrass[1], s1_arrass[0], address);
 				
 			}
 			counter = 0;
@@ -160,6 +163,7 @@ case '1': /* Data (Instruction or data) record */
 		s1_arrass[counter] = byte;
 		counter += 1;
 		pos += 2;
+		address += 2;
 
 		//s1_arr[arr_count] = byte;
 		//arr_count += 1;

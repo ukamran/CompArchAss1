@@ -248,7 +248,7 @@ int handle_four(int second_char, int third_char) {
 	}
 }
 
-void decode_assembly(int low, int high) {
+void decode_assembly(int low, int high, unsigned int address) {
 	/*int lower_var = low;
 	int higher_var = high;
 	char first_char = lower_var.toString()[0];
@@ -354,7 +354,7 @@ void decode_assembly(int low, int high) {
 	char opsetg5[4];
 	char opsetg6[4];
 	char opsetg22[4];
-
+	char opsetg1[4];
 
 
 	if (instr_from_arr == 7 || instr_from_arr == 8 || instr_from_arr == 9 || instr_from_arr == 10 || instr_from_arr == 11 || instr_from_arr == 12 || instr_from_arr == 13 || instr_from_arr == 14
@@ -401,6 +401,10 @@ void decode_assembly(int low, int high) {
 	else if (instr_from_arr == 24 || instr_from_arr == 25) { //ld, st
 		strcpy(opsetg22, inst[instr_from_arr]);
 		decode_opsetg22(opsetg22, bin_total);
+	}
+	else if (instr_from_arr ==  1) { //bra
+		strcpy(opsetg1, inst[instr_from_arr]);
+		decode_opsetg1(opsetg1, bin_total, address);
 	}
 
 }

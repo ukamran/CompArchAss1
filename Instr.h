@@ -18,5 +18,7 @@ extern void decode_opsetg6(char input1[], char input2[16]);
 extern void decode_opsetg23(char input1[], char input2[16]);
 extern void decode_opsetg11(char input1[], char input2[16]);
 extern void decode_opsetg12(char input1[], char input2[16]);
+extern void decode_opsetg1(char input_instr[], char input_binary[16], unsigned int address);
+
 
 

@@ -1,7 +1,6 @@
 /**
-* This file is used to decode the following operand: ldr, str
+* This file is used to decode the following operand: bra, bl
 * 
-* NOT DONE!!!
 */
 
 #include <stdio.h>
