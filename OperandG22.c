@@ -42,7 +42,7 @@ char to_hex_g22(char bin_bits[4]) {
 
 	int counter = 0;
 
-	printf("G3 bin bits: %s", bin_bits);
+	//printf("G3 bin bits: %s", bin_bits);
 
 	while (strcmp(bin_bits, bin_possible_bits[counter]) != 0 && counter < 9) {
 		printf(bin_possible_bits[counter]);

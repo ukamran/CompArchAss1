@@ -54,7 +54,7 @@ void display_and_check_srec(char* srec)
  */
 unsigned int length;
 unsigned int ah, al, address;
-unsigned int starting_address;
+unsigned int interim_address;
 unsigned int byte;
 unsigned int chksum;
 unsigned int pos;
@@ -115,22 +115,21 @@ case '1': /* Data (Instruction or data) record */
 	counter = 0;
 
 	printf("Address: %04x: ", address);
-	starting_address = address;
+	interim_address = address;
 	for (i = 0; i <= length; i++)
 	{
 		sscanf_s(&srec[pos], "%2x", &byte);
 #ifdef DISPLAY_BYTE
-		printf("This is for S1: %02x ", byte);
+		//printf("This is for S1: %02x ", byte);
 #endif
 		chksum += CHAR_MASK(byte);
-
 
 		if (((pos % 4) == 0) && (pos!=8)) {
 			//decodeAssembly(s1_arr);
 			unsigned int loop;
 			char high[2];
 			char low[2];
-			for (loop = 0; loop < 2; loop += 1) {
+			//for (loop = 0; loop < 2; loop += 1) {
 				//printf("High: %02x ,", s1_arrass[1]);
 				//printf("Low: %02x ,", s1_arrass[0]);
 				//printf(high, "%02x", s1_arrass[1]);
@@ -153,17 +152,17 @@ case '1': /* Data (Instruction or data) record */
 				//printf(low[0]);
 
 				//decode_assembly(s1_arrass[1], s1_arrass[0]);
-				printf("#%04x", address);
-				decode_assembly(s1_arrass[1], s1_arrass[0], address);
+				//printf("Address: #%04x \n", interim_address);
+				decode_assembly(s1_arrass[1], s1_arrass[0], interim_address);
 				
-			}
+			//}
 			counter = 0;
 		}
 		//my code
 		s1_arrass[counter] = byte;
 		counter += 1;
 		pos += 2;
-		address += 2;
+		interim_address += 2;
 
 		//s1_arr[arr_count] = byte;
 		//arr_count += 1;

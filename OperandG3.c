@@ -45,7 +45,7 @@ char to_hex_g3(char bin_bits[4]) {
 
 	int counter = 0;
 
-	printf("G3 bin bits: %s", bin_bits);
+	//printf("G3 bin bits: %s", bin_bits);
 
 	while (strcmp(bin_bits, bin_possible_bits[counter]) != 0 && counter < 9) {
 		printf(bin_possible_bits[counter]);
@@ -69,7 +69,7 @@ char to_hex_4bits(char bin_bits[5]) {
 
 	int counter = 0;
 
-	printf("Bin bits: %s", bin_bits);
+	//printf("Bin bits: %s", bin_bits);
 
 	while (strcmp(bin_bits, bin_possible_bits[counter]) != 0 && counter < 17) {
 		printf(bin_possible_bits[counter]);

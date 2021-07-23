@@ -67,8 +67,10 @@ void w_or_b(char WB, char* decoded_wb) {
 
 }
 
+//add
 void decode_opset1(char input_instr[], char input_binary[16]) {
 
+	//printf("%s\n",input_binary);
 	// Store the register or constant bit.
 	char RC = input_binary[8];
 
@@ -87,7 +89,7 @@ void decode_opset1(char input_instr[], char input_binary[16]) {
 	char decoded_wb[2];
 	char decoded_instr[13];
 
-
+	//printf("The RC bit: %c \n", RC);
 	//store the register or constant
 	if (RC=='1') {
 		decode_const(SC, decoded_sc);
@@ -106,7 +108,7 @@ void decode_opset1(char input_instr[], char input_binary[16]) {
 	//construct instruction
 	sprintf(decoded_instr, "%s %s,%s", input_instr, decoded_sc, decoded_dreg);
 	
-	printf(decoded_instr); 
+	printf(decoded_instr);
 
 
 }

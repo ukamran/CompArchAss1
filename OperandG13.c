@@ -19,7 +19,7 @@ char to_hex(char bin_bits[5]) {
 
 	int counter = 0;
 
-	printf("Bin bits: %s", bin_bits);
+	//printf("Bin bits: %s", bin_bits);
 
 	while (strcmp(bin_bits, bin_possible_bits[counter]) != 0 && counter < 17) {
 		printf(bin_possible_bits[counter]);
