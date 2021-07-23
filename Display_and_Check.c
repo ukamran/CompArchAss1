@@ -129,7 +129,7 @@ case '1': /* Data (Instruction or data) record */
 			unsigned int loop;
 			char high[2];
 			char low[2];
-			//for (loop = 0; loop < 2; loop += 1) {
+			for (loop = 0; loop < 2; loop += 1) {
 				//printf("High: %02x ,", s1_arrass[1]);
 				//printf("Low: %02x ,", s1_arrass[0]);
 				//printf(high, "%02x", s1_arrass[1]);
@@ -152,10 +152,10 @@ case '1': /* Data (Instruction or data) record */
 				//printf(low[0]);
 
 				//decode_assembly(s1_arrass[1], s1_arrass[0]);
-				//printf("Address: #%04x \n", interim_address);
+				printf("Address: #%04x \n", interim_address);
 				decode_assembly(s1_arrass[1], s1_arrass[0], interim_address);
 				
-			//}
+			}
 			counter = 0;
 		}
 		//my code

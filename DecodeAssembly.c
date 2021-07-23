@@ -355,7 +355,8 @@ void decode_assembly(int low, int high, unsigned int address) {
 	char opsetg6[4];
 	char opsetg22[4];
 	char opsetg1[4];
-	char opsetg0[4];
+	char opsetg2[4];
+	char opsetg24[4];
 
 
 	if (instr_from_arr == 7 || instr_from_arr == 8 || instr_from_arr == 9 || instr_from_arr == 10 || instr_from_arr == 11 || instr_from_arr == 12 || instr_from_arr == 13 || instr_from_arr == 14
@@ -408,8 +409,15 @@ void decode_assembly(int low, int high, unsigned int address) {
 		decode_opsetg1(opsetg1, bin_total);
 	}
 	else if (instr_from_arr == 0) { //bra
-		strcpy(opsetg0, inst[instr_from_arr]);
-		decode_opsetg0(opsetg0, bin_total);
+		strcpy(opsetg2, inst[instr_from_arr]);
+		decode_opsetg2(opsetg2, bin_total);
+	}
+	else if (instr_from_arr == 30 || instr_from_arr == 31) { //str, ldr
+		strcpy(opsetg24, inst[instr_from_arr]);
+		decode_opsetg24(opsetg24, bin_total);
+	}
+	else {
+		printf("Not a valid instruction!");
 	}
 
 }
