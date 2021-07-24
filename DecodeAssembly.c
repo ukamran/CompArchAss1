@@ -248,7 +248,7 @@ int handle_four(int second_char, int third_char) {
 	}
 }
 
-void decode_assembly(int low, int high, unsigned int address) {
+void decode_assembly(int low, int high, unsigned int address, char filename[]) {
 	/*int lower_var = low;
 	int higher_var = high;
 	char first_char = lower_var.toString()[0];

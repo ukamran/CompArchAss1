@@ -6,5 +6,5 @@
 */
 
 /* External entry points */
-extern void output_file(int parsedRecord);
+extern void create_file(char[]);
 #pragma once

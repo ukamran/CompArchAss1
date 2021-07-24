@@ -29,6 +29,8 @@
 #include "Instr.h"
 
 #define DISPLAY_BYTE /* Remove comments '//' to display contents of S1 and S9 records */
+
+/*
 int hextodc(char* hex) {
 	int y = 0;
 	int dec = 0;
@@ -44,7 +46,7 @@ int hextodc(char* hex) {
 	}
 return dec;
 }
-
+**/
 void display_and_check_srec(char* srec)
 {
 /*
@@ -67,6 +69,9 @@ unsigned int addr;
 
 unsigned int s1_arr[20];
 unsigned int s1_arrass[2];
+
+char filename[20];
+
 /* Check for 'S' (srec[0]) */
 if (srec[0] != 'S')
 {
@@ -97,18 +102,38 @@ pos = 8;     /* First byte in data (position 8 in srec[] */
 /* Read data bytes */
 switch (srec[1])
 {
+
 case '0': /* Source filename */
 	/* Print filename plus checksum byte */
 	for (i = 0; i <= length; i++)
 	{
+		
 		sscanf_s(&srec[pos], "%2x", &byte);
-		printf("This is the byte: %d", byte);
+		//printf("This is the byte: %d", byte);
+		char bytechar = byte;
+		filename[i] = bytechar;
+		//printf("%c", bytechar);
 		//char parsedRecord[] = "Cool.";
 		//output_file(byte);
 		chksum += CHAR_MASK(byte);
 		pos += 2;
 	}
+
+	filename[i-1] = '\0'; //null terminate to avoid special characters at the end
+	/*
+	int counter = 0;
+	while (filename_temp[counter] != '\0') {
+		counter++;
+	}
+	printf("Length: %d \n", counter);
+	for (int i = 0; i < (counter + 1); i++) {
+		printf("%c", filename_temp[i]);
+	}
+	*/
+	printf("%s", filename);
+	create_file(filename);
 	break;
+
 case '1': /* Data (Instruction or data) record */
 	/* Print first address and bytes */
 	arr_count = 0;
@@ -153,7 +178,7 @@ case '1': /* Data (Instruction or data) record */
 
 				//decode_assembly(s1_arrass[1], s1_arrass[0]);
 				printf("Address: #%04x \n", interim_address);
-				decode_assembly(s1_arrass[1], s1_arrass[0], interim_address);
+				decode_assembly(s1_arrass[1], s1_arrass[0], interim_address, filename);
 				
 			}
 			counter = 0;

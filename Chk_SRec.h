@@ -9,4 +9,4 @@
 
 /* External entry points */
 extern void display_and_check_srec(char*);
-extern void decode_assembly(int, int, unsigned int);
+extern void decode_assembly(int, int, unsigned int, char input[]);
