@@ -13,7 +13,7 @@
 
 
 //setcc clrcc
-void decode_opsetg6(char input_instr[], char input_binary[16]) {
+void decode_opsetg6(char input_instr[], char input_binary[16], char filename[]) {
 
 	//Store the bits
 	char v = input_binary[11];
@@ -67,6 +67,7 @@ void decode_opsetg6(char input_instr[], char input_binary[16]) {
 	//construct instruction
 	sprintf(decoded_instr, "%s %s", input_instr, output);
 
+	append_file(filename, decoded_instr);
 	printf(decoded_instr);
 
 }

@@ -22,7 +22,7 @@ int binary_to_decimal(char input[16]) {
 }
 
 //bra
-void decode_opsetg1(char input_instr[], char input_binary[16]) {
+void decode_opsetg1(char input_instr[], char input_binary[16], char filename[]) {
 	int address = 1000;
 	//declare instruction to be decoded by end
 	char decoded_instr[10];
@@ -87,13 +87,15 @@ void decode_opsetg1(char input_instr[], char input_binary[16]) {
 	//construct instruction
 	sprintf(decoded_instr, "%s %s", input_instr, target_addr);
 	//puts("BRA was triggered.");
+
+	append_file(filename, decoded_instr);
 	printf(decoded_instr);
 
 
 }
 
 //bl
-void decode_opsetg2(char input_instr[], char input_binary[16]) {
+void decode_opsetg2(char input_instr[], char input_binary[16], char filename[]) {
 	int address = 1000;
 	//declare instruction to be decoded by end
 	char decoded_instr[10];
@@ -158,6 +160,8 @@ void decode_opsetg2(char input_instr[], char input_binary[16]) {
 	//construct instruction
 	sprintf(decoded_instr, "%s %s", input_instr, target_addr);
 	//puts("BRA was triggered.");
+
+	append_file(filename, decoded_instr);
 	printf(decoded_instr);
 
 

@@ -33,7 +33,7 @@ void create_file(char filename[]) {
 void append_file(char filename[], char output[]) {
 	FILE* fp;
 	fp = fopen(filename, "a");
-	fprintf("/n");
-	fprintf(output);
+	//fprintf(fp,"/n");
+	fprintf(fp,"%s\n",output);
 	fclose(fp);
 }

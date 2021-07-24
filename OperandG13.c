@@ -61,7 +61,7 @@ void decode_regg13(char r_bits[3], char* decoded_reg) {
 
 
 
-void decode_opsetg13(char input_instr[], char input_binary[16]) {
+void decode_opsetg13(char input_instr[], char input_binary[16], char filename[]) {
 
 	//Store the byte
 	char byte_instr_one[5] = { input_binary[5],input_binary[6],input_binary[7],input_binary[8],0 };
@@ -84,6 +84,7 @@ void decode_opsetg13(char input_instr[], char input_binary[16]) {
 	//construct instruction
 	sprintf(decoded_instr, "%s %s,%s", input_instr, hex_arr, decoded_dregg13);
 
+	append_file(filename, decoded_instr);
 	printf(decoded_instr);
 
 

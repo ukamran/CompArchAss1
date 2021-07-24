@@ -23,7 +23,7 @@ int binary_to_decimal_7bit(char input[7]) {
 
 
 //ldr str instructions
-void decode_opsetg24(char input_instr[], char input_binary[16]) {
+void decode_opsetg24(char input_instr[], char input_binary[16], char filename[]) {
 
 	//Determine if this is an ldr (0) or str (1) instruction
 	char ldrstr = input_binary[1];
@@ -96,6 +96,7 @@ void decode_opsetg24(char input_instr[], char input_binary[16]) {
 		sprintf(decoded_instr, "%s %s,%s,%s", input_instr, decoded_sc, decoded_dreg, offset_instr);
 	}
 	
+	append_file(filename, decoded_instr);
 	printf(decoded_instr);
 
 
