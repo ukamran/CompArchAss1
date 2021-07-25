@@ -11,21 +11,27 @@ int hex_10(char input) {
 	int output;
 	switch (input) {
 	case'A':
+	case 'a':
 		output = 10;
 		break;
 	case 'B':
+	case 'b':
 		output = 11;
 		break;
 	case 'C':
+	case 'c':
 		output = 12;
 		break;
 	case 'D':
+	case 'd':
 		output = 13;
 		break;
 	case 'E':
+	case 'e':
 		output = 14;
 		break;
 	case 'F':
+	case 'f':
 		output = 15;
 		break;
 	default:
@@ -36,7 +42,7 @@ int hex_10(char input) {
 }
 void binary(char input_hex, char* output_binary) {
 	
-	const char *output_arr[] = {"0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1111" };
+	const char *output_arr[] = {"0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111" };
 	char op[4];
 	int output_int;
 	switch (input_hex) {
@@ -71,21 +77,27 @@ void binary(char input_hex, char* output_binary) {
 		output_int = 9;
 		break;
 	case 'A':
+	case 'a':
 		output_int = 10;
 		break;
 	case 'B':
+	case 'b':
 		output_int = 11;
 		break;
 	case 'C':
+	case 'c':
 		output_int = 12;
 		break;
 	case 'D':
+	case 'd':
 		output_int = 13;
 		break;
 	case 'E':
+	case 'e':
 		output_int = 14;
 		break;
 	case 'F':
+	case 'f':
 		output_int = 15;
 		break;
 	default:
@@ -99,69 +111,9 @@ void binary(char input_hex, char* output_binary) {
 	}
 }
 
-/**
-* 
-char binary[4](char input) {
-	char[4] output;
-	switch (input_hex) {
-	case'0':
-		output = "0000";
-		break;
-	case '1':
-		output = "0001";
-		break;
-	case '2':
-		output = "0010";
-		break;
-	case '3':
-		output = "0011";
-		break;
-	case '4':
-		output = "0100";
-		break;
-	case '5':
-		output = "0101";
-		break;
-	case '6':
-		output = "0110";
-		break;
-	case '7':
-		output = "0111";
-		break;
-	case '8':
-		output = "1000";
-		break;
-	case '9':
-		output = "1001";
-		break;
-	case 'A':
-		output = "1010";
-		break;
-	case 'B':
-		output = "1011";
-		break;
-	case 'C':
-		output = "1100";
-		break;
-	case 'D':
-		output = "1101";
-		break;
-	case 'E':
-		output = "1110";
-		break;
-	case 'F':
-		output = "1111";
-		break;
-	default:
-		printf("Invalid!");
-		break;
-	}
-	return output;
-}
-**/
-
 int handle_two(int second_char, int third_char) {
 	if (second_char < 4) {
+		printf("Get here?\n");
 		return 1; //BRA
 	}
 	else if ((second_char > 4) ) {
@@ -182,6 +134,9 @@ int handle_two(int second_char, int third_char) {
 		else if (third_char >= 4) {
 			return 6; //CLRCC
 		}
+	}
+	else {
+		printf("Invalid!");
 	}
 
 }
@@ -245,7 +200,11 @@ int handle_four(int second_char, int third_char) {
 			return 23; //SXT
 		}
 		break;
+	
+	default:
+		printf("Invalid!");
 	}
+	
 }
 
 void decode_assembly(int low, int high, unsigned int address, char filename[]) {
@@ -263,6 +222,7 @@ void decode_assembly(int low, int high, unsigned int address, char filename[]) {
 	char lowhex[2];
 	char highhex[2];
 
+	printf("At start of decode assembly\n");
 	sprintf(lowhex, "%02X", low);
 	sprintf(highhex, "%02X", high);
 
@@ -270,15 +230,26 @@ void decode_assembly(int low, int high, unsigned int address, char filename[]) {
 	int second_char = hex_10(lowhex[1]);
 	int third_char = hex_10(highhex[0]);
 
+	printf("Vars declared\n");
 	char bin_first[4];
 	char bin_second[4];
 	char bin_third[4];
 	char bin_fourth[4];
 
 	binary(lowhex[0], bin_first);
+	printf("Low binary 1\n");
+
 	binary(lowhex[1], bin_second);
+	printf("Low binary 2\n");
+
 	binary(highhex[0], bin_third);
+	printf("Low binary 3\n");
+
 	binary(highhex[1], bin_fourth);
+	printf("Low binary 4\n");
+
+
+	printf("Binary conversion \n");
 
 	char bin_total[16] = {	bin_first[0], bin_first[1], bin_first[2],bin_first[3],
 							bin_second[0],bin_second[1],bin_second[2],bin_second[3],
@@ -294,9 +265,9 @@ void decode_assembly(int low, int high, unsigned int address, char filename[]) {
 	//int second_char = high % 10;
 	//int third_char = low / pow(10, 1);
 
-	//printf("First char: %d", first_char);
-	//printf("Second char: %d", second_char);
-	//printf("Third char: %d", third_char);
+	printf("First char: %d \n", first_char);
+	printf("Second char: %d \n", second_char);
+	printf("Third char: %d \n", third_char);
 
 
 	const char *inst[] = { "BL","BRA","CEX","SETPRI","SVC","SETCC","CLRCC","ADD","ADDC","SUB","SUBC","DADD","CMP",
@@ -334,6 +305,7 @@ void decode_assembly(int low, int high, unsigned int address, char filename[]) {
 
 		break;
 	case 2:
+		printf("At this point?");
 		instr_from_arr = handle_two(second_char, third_char);
 		printf(inst[handle_two(second_char, third_char)]);
 		break;
@@ -341,6 +313,8 @@ void decode_assembly(int low, int high, unsigned int address, char filename[]) {
 		instr_from_arr = handle_four(second_char, third_char);
 		printf(inst[handle_four(second_char, third_char)]);
 		break;
+	default:
+		printf("Invalid!");
 	};
 
 	char opset1[4];

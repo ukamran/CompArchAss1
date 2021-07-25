@@ -67,8 +67,9 @@ unsigned int arr_count;
 unsigned int counter;
 unsigned int addr; 
 
-unsigned int s1_arr[20];
 unsigned int s1_arrass[2];
+unsigned int arr[40];
+
 
 char filename[20];
 
@@ -107,7 +108,7 @@ case '0': /* Source filename */
 	/* Print filename plus checksum byte */
 	for (i = 0; i <= length; i++)
 	{
-		
+
 		sscanf_s(&srec[pos], "%2x", &byte);
 		//printf("This is the byte: %d", byte);
 		char bytechar = byte;
@@ -119,7 +120,7 @@ case '0': /* Source filename */
 		pos += 2;
 	}
 
-	filename[i-1] = '\0'; //null terminate to avoid special characters at the end
+	filename[i - 1] = '\0'; //null terminate to avoid special characters at the end
 	/*
 	int counter = 0;
 	while (filename_temp[counter] != '\0') {
@@ -138,61 +139,102 @@ case '1': /* Data (Instruction or data) record */
 	/* Print first address and bytes */
 	arr_count = 0;
 	counter = 0;
-
+	int max_length = length;
 	printf("Address: %04x: ", address);
 	interim_address = address;
+	unsigned int final_pos = pos + (length - 3) * 2;
+
+
 	for (i = 0; i <= length; i++)
 	{
 		sscanf_s(&srec[pos], "%2x", &byte);
 #ifdef DISPLAY_BYTE
-		//printf("This is for S1: %02x ", byte);
+		//printf("This is for S1: %02x \n", byte);
 #endif
 		chksum += CHAR_MASK(byte);
+		/**
+			printf("This is the array: %2x\n", arr[arr_count]);
 
-		if (((pos % 4) == 0) && (pos!=8)) {
-			//decodeAssembly(s1_arr);
-			unsigned int loop;
-			char high[2];
-			char low[2];
-			for (loop = 0; loop < 2; loop += 1) {
-				//printf("High: %02x ,", s1_arrass[1]);
-				//printf("Low: %02x ,", s1_arrass[0]);
-				//printf(high, "%02x", s1_arrass[1]);
-				//sprintf(low, "%02x", s1_arrass[0]);
-				//printf("High: %c", high);
-				//printf();
-				//printf("Low: %c", low);
-				//printf();
-				//int high_int = high - '0';
-				//int low_int = low - '0';
-
-				//printf("High int: %d", high_int);
-				//printf("Low int: %d", low_int);
-
-				//printf("First char high: ");
-				//printf(high[0]);
-				//printf("Second char high: ");
-				//printf(high[1]);
-				//printf("Third char low: ");
-				//printf(low[0]);
-
-				//decode_assembly(s1_arrass[1], s1_arrass[0]);
-				printf("Address: #%04x \n", interim_address);
-				decode_assembly(s1_arrass[1], s1_arrass[0], interim_address, filename);
-				
+			if ((i%2)==0) {
+				counter = 0;
 			}
-			counter = 0;
-		}
+			s1_arrass[counter] = byte;
+
+			printf("Array counter: %d\n", arr_count);
+			printf("i: %d, length: %d\n", i, length);
+
+			if (((pos % 4) == 0) && (pos!=8)) {
+				//decodeAssembly(s1_arr);
+				printf("pos: %d\n", pos);
+				unsigned int loop;
+				char high[2];
+				char low[2];
+				//for (loop = 0; loop < 2; loop += 1) {
+					printf("High: %02x ,", s1_arrass[1]);
+					printf("Low: %02x ,", s1_arrass[0]);
+					//printf(high, "%02x", s1_arrass[1]);
+					//sprintf(low, "%02x", s1_arrass[0]);
+					//printf("High: %c", high);
+					//printf();
+					//printf("Low: %c", low);
+					//printf();
+					//int high_int = high - '0';
+					//int low_int = low - '0';
+
+					//printf("High int: %d", high_int);
+					//printf("Low int: %d", low_int);
+
+					//printf("First char high: ");
+					//printf(high[0]);
+					//printf("Second char high: ");
+					//printf(high[1]);
+					//printf("Third char low: ");
+					//printf(low[0]);
+
+					//decode_assembly(s1_arrass[1], s1_arrass[0]);
+					printf("Address: #%04x \n", interim_address);
+					//decode_assembly(s1_arrass[1], s1_arrass[0], interim_address, filename);
+					counter = 0;
+				//}
+				}
+		**/
 		//my code
-		s1_arrass[counter] = byte;
+		arr[i] = byte;
+
 		counter += 1;
-		pos += 2;
+
 		interim_address += 2;
+		pos += 2;
 
 		//s1_arr[arr_count] = byte;
-		//arr_count += 1;
+		arr_count += 1;
+
+
 	}
+	int count_up = 0;
+	int count_up_h = 1;
+
+	//decode_assembly(arr[1], arr[0], 1000, filename);
+	//decode_assembly(arr[3], arr[2], 1000, filename);
+	//decode_assembly(arr[5], arr[4], 1, filename);
 	
+	
+	for (count_up = 0; count_up < i; count_up++) {
+
+		printf("Counter %d: %02x %d\n", count_up, arr[count_up], arr[count_up]);
+
+
+		if ((count_up % 2) == 0 && (count_up != i - 1)) {
+			printf("count up mod: %d\n", count_up);
+	//		printf("This is low: %d and high:%d\n", count_up, count_up_h);
+			decode_assembly(arr[count_up +1], arr[count_up], 1000, filename);
+		}
+		count_up++;
+		//count_up_h++;
+	}
+
+	
+
 	break;
 case '9': /* Starting address record */
 	printf("Starting address: %04x", address);

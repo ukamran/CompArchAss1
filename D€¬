@@ -1,0 +1,3 @@
+MOVLZ #00,R1
+ADD.w¬ #04,R1
+BRA #fff67988

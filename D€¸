@@ -1,4 +1,0 @@
-MOVLZ #00,R1
-MOVLZ #00,R1
-ADD.w¸ #04,R1
-ADD.w¸ #04,R1
