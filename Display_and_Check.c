@@ -69,9 +69,10 @@ unsigned int addr;
 
 unsigned int s1_arrass[2];
 unsigned int arr[40];
+unsigned int address_arr[40];
 
 
-char filename[20];
+char filename[100];
 
 /* Check for 'S' (srec[0]) */
 if (srec[0] != 'S')
@@ -131,12 +132,15 @@ case '0': /* Source filename */
 		printf("%c", filename_temp[i]);
 	}
 	*/
-	printf("%s", filename);
-	create_file(filename);
+	printf(" This is the filename in S0: %s", filename);
+	create_file(filename, length);
+
 	break;
 
 case '1': /* Data (Instruction or data) record */
 	/* Print first address and bytes */
+	//printf(" This is the filename in S1 at start: %s", filename);
+
 	arr_count = 0;
 	counter = 0;
 	int max_length = length;
@@ -199,11 +203,13 @@ case '1': /* Data (Instruction or data) record */
 				}
 		**/
 		//my code
+		address_arr[i] = interim_address;
 		arr[i] = byte;
 
 		counter += 1;
 
-		interim_address += 2;
+		interim_address += 1;
+		printf("%d \n",interim_address);
 		pos += 2;
 
 		//s1_arr[arr_count] = byte;
@@ -223,11 +229,12 @@ case '1': /* Data (Instruction or data) record */
 
 		printf("Counter %d: %02x %d\n", count_up, arr[count_up], arr[count_up]);
 
-
 		if ((count_up % 2) == 0 && (count_up != i - 1)) {
 			printf("count up mod: %d\n", count_up);
 	//		printf("This is low: %d and high:%d\n", count_up, count_up_h);
-			decode_assembly(arr[count_up +1], arr[count_up], 1000, filename);
+			printf("%04x \n", address_arr[count_up]);
+			//printf("This is the filename: %s \n", filename);
+			decode_assembly(arr[count_up +1], arr[count_up], address_arr[count_up]);
 		}
 		count_up++;
 		//count_up_h++;

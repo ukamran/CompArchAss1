@@ -5,6 +5,8 @@
 #include "Output_File.h"
 
 
+char name_of_file[100];
+unsigned int length_of_name;
 
 /*
 void append_to_file(char[] filename) {
@@ -24,15 +26,25 @@ void output_file(int parsedRecord){
 }
 */
 
-void create_file(char filename[]) {
+void create_file(char filename[], unsigned int filename_length) {
+	// set the filename locally here
+	int i;
+	length_of_name = filename_length;
+	for (i = 0; i < filename_length; i++) {
+		name_of_file[i] = filename[i];
+	}
+
+
 	FILE* fp;
 	fp = fopen(filename, "w");
 	fclose(fp);
 }
 
-void append_file(char filename[], char output[]) {
+void append_file(char output[]) {
 	FILE* fp;
-	fp = fopen(filename, "a");
+	printf("This is the name of the file: %s \n", name_of_file);
+	fp = fopen(name_of_file, "a");
+	printf("Error here?");
 	//fprintf(fp,"/n");
 	fprintf(fp,"%s\n",output);
 	fclose(fp);

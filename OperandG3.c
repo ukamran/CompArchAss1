@@ -86,7 +86,7 @@ char to_hex_4bits(char bin_bits[5]) {
 
 
 //cex instruction
-void decode_opsetg3(char input_instr[], char input_binary[16], char filename[]) {
+void decode_opsetg3(char input_instr[], char input_binary[16],  unsigned int address) {
 
 	//Store the byte
 	char cond_bits[5] = { input_binary[6],input_binary[7],input_binary[8],input_binary[9],0 };
@@ -110,14 +110,14 @@ void decode_opsetg3(char input_instr[], char input_binary[16], char filename[]) 
 	//construct instruction
 	sprintf(decoded_instr, "%s %s,%s", input_instr, decoded_conds, tf_arr);
 
-	append_file(filename, decoded_instr);
+	append_file(decoded_instr);
 	printf(decoded_instr);
 
 
 }
 
 //setpri
-void decode_opsetg4(char input_instr[], char input_binary[16], char filename[]) {
+void decode_opsetg4(char input_instr[], char input_binary[16], unsigned int address) {
 
 	//Store the byte
 	char pr_bits[4] = { input_binary[13], input_binary[14], input_binary[15],0 };
@@ -133,12 +133,12 @@ void decode_opsetg4(char input_instr[], char input_binary[16], char filename[]) 
 	//construct instruction
 	sprintf(decoded_instr, "%s %s", input_instr, setpri_arr);
 
-	append_file(filename, decoded_instr);
+	append_file(decoded_instr);
 	printf(decoded_instr);
 }
 
 //svc
-void decode_opsetg5(char input_instr[], char input_binary[16], char filename[]) {
+void decode_opsetg5(char input_instr[], char input_binary[16],  unsigned int address) {
 
 	//Store the byte
 	char sa_bits[5] = { input_binary[12], input_binary[13], input_binary[14], input_binary[15],0 };
@@ -154,7 +154,7 @@ void decode_opsetg5(char input_instr[], char input_binary[16], char filename[]) 
 	//construct instruction
 	sprintf(decoded_instr, "%s %s", input_instr, svc_arr);
 
-	append_file(filename, decoded_instr);
+	append_file(decoded_instr);
 	printf(decoded_instr);
 
 }

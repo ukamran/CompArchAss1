@@ -49,7 +49,7 @@ void decode_regg10(char r_bits[4], char* decoded_reg) {
 
 
 
-void decode_opsetg10(char input_instr[], char input_binary[16], char filename[]) {
+void decode_opsetg10(char input_instr[], char input_binary[16],  unsigned int address) {
 
 	//Store the word or byte bit.
 	char WBg10 = input_binary[9];
@@ -73,7 +73,7 @@ void decode_opsetg10(char input_instr[], char input_binary[16], char filename[])
 	//construct instruction
 	sprintf(decoded_instr, "%s %s", input_instr, decoded_dregg10);
 
-	append_file(filename, decoded_instr);
+	append_file( decoded_instr);
 	printf(decoded_instr);
 
 

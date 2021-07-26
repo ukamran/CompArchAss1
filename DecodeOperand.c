@@ -68,7 +68,7 @@ void w_or_b(char WB, char* decoded_wb) {
 }
 
 //add
-void decode_opset1(char input_instr[], char input_binary[16], char filename[]) {
+void decode_opset1(char input_instr[], char input_binary[16]) {
 
 	//printf("%s\n",input_binary);
 	// Store the register or constant bit.
@@ -108,14 +108,14 @@ void decode_opset1(char input_instr[], char input_binary[16], char filename[]) {
 	//construct instruction
 	sprintf(decoded_instr, "%s %s,%s", input_instr, decoded_sc, decoded_dreg);
 	
-	append_file(filename, decoded_instr);
+	append_file(decoded_instr);
 	printf(decoded_instr);
 
 
 }
 
 //group 11: swpb/sxt
-void decode_opsetg11(char input_instr[], char input_binary[16], char filename[]) {
+void decode_opsetg11(char input_instr[], char input_binary[16]) {
 
 	//Store the Destination bits
 	char D[4] = { input_binary[13],input_binary[14],input_binary[15],0 };
@@ -131,7 +131,7 @@ void decode_opsetg11(char input_instr[], char input_binary[16], char filename[])
 	//construct instruction
 	sprintf(decoded_instr, "%s %s", input_instr, decoded_dreg);
 
-	append_file(filename, decoded_instr);
+	append_file(decoded_instr);
 	printf(decoded_instr);
 
 
@@ -139,7 +139,7 @@ void decode_opsetg11(char input_instr[], char input_binary[16], char filename[])
 
 
 //group 12: swap
-void decode_opsetg12(char input_instr[], char input_binary[16], char filename[]) {
+void decode_opsetg12(char input_instr[], char input_binary[16]) {
 
 	//Store the Destination bits
 	char D[4] = { input_binary[13],input_binary[14],input_binary[15],0 };
@@ -162,7 +162,7 @@ void decode_opsetg12(char input_instr[], char input_binary[16], char filename[])
 	//construct instruction
 	sprintf(decoded_instr, "%s %s,%s", input_instr, decoded_sreg, decoded_dreg);
 
-	append_file(filename, decoded_instr);
+	append_file(decoded_instr);
 	printf(decoded_instr);
 
 
@@ -170,7 +170,7 @@ void decode_opsetg12(char input_instr[], char input_binary[16], char filename[])
 
 
 //group 13: mov. example: mov.b Rsource,Rdest
-void decode_opsetg23(char input_instr[], char input_binary[16], char filename[]) {
+void decode_opsetg23(char input_instr[], char input_binary[16]) {
 
 	//Store the Destination bits
 	char D[4] = { input_binary[13],input_binary[14],input_binary[15],0 };
@@ -200,7 +200,7 @@ void decode_opsetg23(char input_instr[], char input_binary[16], char filename[])
 	//construct instruction
 	sprintf(decoded_instr, "%s %s,%s", input_instr, decoded_sreg, decoded_dreg);
 
-	append_file(filename, decoded_instr);
+	append_file(decoded_instr);
 	printf(decoded_instr);
 
 }

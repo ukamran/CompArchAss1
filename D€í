@@ -1,3 +1,0 @@
-MOVLZ #00,R1
-ADD.wí #04,R1
-BRA #1ad788

@@ -207,7 +207,7 @@ int handle_four(int second_char, int third_char) {
 	
 }
 
-void decode_assembly(int low, int high, unsigned int address, char filename[]) {
+void decode_assembly(int low, int high, unsigned int address) {
 	/*int lower_var = low;
 	int higher_var = high;
 	char first_char = lower_var.toString()[0];
@@ -336,59 +336,59 @@ void decode_assembly(int low, int high, unsigned int address, char filename[]) {
 	if (instr_from_arr == 7 || instr_from_arr == 8 || instr_from_arr == 9 || instr_from_arr == 10 || instr_from_arr == 11 || instr_from_arr == 12 || instr_from_arr == 13 || instr_from_arr == 14
 		|| instr_from_arr == 15 || instr_from_arr == 16 || instr_from_arr == 17) {
 		strcpy(opset1, inst[instr_from_arr]);
-		decode_opset1(opset1, bin_total, filename);
+		decode_opset1(opset1, bin_total, address);
 	}
 	else if (instr_from_arr == 26 || instr_from_arr == 27 || instr_from_arr == 28 || instr_from_arr == 29) { //movl, movlz, movls, movh decoding
 		strcpy(opsetg13, inst[instr_from_arr]);
-		decode_opsetg13(opsetg13, bin_total, filename);
+		decode_opsetg13(opsetg13, bin_total, address);
 		}
 	else if (instr_from_arr == 20 || instr_from_arr == 21) {
 		strcpy(opsetg10, inst[instr_from_arr]);
-		decode_opsetg10(opsetg10, bin_total, filename);
+		decode_opsetg10(opsetg10, bin_total, address);
 	}
 	else if (instr_from_arr == 22 || instr_from_arr == 23) { //swpb, sxt
 		strcpy(opsetg11, inst[instr_from_arr]);
-		decode_opsetg11(opsetg11, bin_total, filename);
+		decode_opsetg11(opsetg11, bin_total, address);
 	}
 	else if (instr_from_arr == 19) { //swap
 		strcpy(opsetg12, inst[instr_from_arr]);
-		decode_opsetg12(opsetg12, bin_total, filename);
+		decode_opsetg12(opsetg12, bin_total, address);
 	}
 	else if (instr_from_arr == 18) { //mov
 		strcpy(opsetg23, inst[instr_from_arr]);
-		decode_opsetg23(opsetg23, bin_total, filename);
+		decode_opsetg23(opsetg23, bin_total, address);
 	}
 	else if (instr_from_arr == 2) { //cex
 		strcpy(opsetg3, inst[instr_from_arr]);
-		decode_opsetg3(opsetg3, bin_total, filename);
+		decode_opsetg3(opsetg3, bin_total, address);
 	}
 	else if (instr_from_arr == 3) { //setpri
 		strcpy(opsetg4, inst[instr_from_arr]);
-		decode_opsetg4(opsetg4, bin_total, filename);
+		decode_opsetg4(opsetg4, bin_total, address);
 	}
 	else if (instr_from_arr == 4) { //svc
 		strcpy(opsetg5, inst[instr_from_arr]);
-		decode_opsetg5(opsetg5, bin_total, filename);
+		decode_opsetg5(opsetg5, bin_total, address);
 	}
 	else if (instr_from_arr == 5 || instr_from_arr == 6) { //setcc, clrcc
 		strcpy(opsetg6, inst[instr_from_arr]);
-		decode_opsetg6(opsetg6, bin_total, filename);
+		decode_opsetg6(opsetg6, bin_total, address);
 	}
 	else if (instr_from_arr == 24 || instr_from_arr == 25) { //ld, st
 		strcpy(opsetg22, inst[instr_from_arr]);
-		decode_opsetg22(opsetg22, bin_total, filename);
+		decode_opsetg22(opsetg22, bin_total, address);
 	}
 	else if (instr_from_arr ==  1) { //bra
 		strcpy(opsetg1, inst[instr_from_arr]);
-		decode_opsetg1(opsetg1, bin_total, filename);
+		decode_opsetg1(opsetg1, bin_total, address);
 	}
 	else if (instr_from_arr == 0) { //bra
 		strcpy(opsetg2, inst[instr_from_arr]);
-		decode_opsetg2(opsetg2, bin_total, filename);
+		decode_opsetg2(opsetg2, bin_total, address);
 	}
 	else if (instr_from_arr == 30 || instr_from_arr == 31) { //str, ldr
 		strcpy(opsetg24, inst[instr_from_arr]);
-		decode_opsetg24(opsetg24, bin_total, filename);
+		decode_opsetg24(opsetg24, bin_total, address);
 	}
 	else {
 		printf("Not a valid instruction!");

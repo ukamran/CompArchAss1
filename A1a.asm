@@ -1,0 +1,3 @@
+MOVLZ #00,R1
+ADD.wJ #04,R1
+BRA #1000

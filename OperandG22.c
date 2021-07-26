@@ -107,7 +107,7 @@ void w_or_b(char WB, char* decoded_wb) {
 
 
 //ldr, str
-void decode_opsetg22(char input_instr[], char input_binary[16], char filename[]) {
+void decode_opsetg22(char input_instr[], char input_binary[16], unsigned int address) {
 
 	//Store the Destination bits
 	char D[4] = { input_binary[13],input_binary[14],input_binary[15],0 };
@@ -163,7 +163,7 @@ void decode_opsetg22(char input_instr[], char input_binary[16], char filename[])
 	//construct instruction
 	sprintf(decoded_instr, "%s %s,%s", input_instr, complete_sreg, complete_dreg);
 
-	append_file(filename, decoded_instr);
+	append_file(decoded_instr);
 	printf(decoded_instr);
 
 

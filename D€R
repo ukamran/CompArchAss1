@@ -1,3 +1,0 @@
-MOVLZ #00,R1
-ADD.wR #04,R1
-BRA #3d4d88

@@ -6,5 +6,5 @@
 */
 
 /* External entry points */
-extern void create_file(char[]);
+extern void create_file(char[], unsigned int);
 #pragma once

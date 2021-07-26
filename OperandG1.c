@@ -22,20 +22,26 @@ int binary_to_decimal(char input[16]) {
 }
 
 //bra
-void decode_opsetg1(char input_instr[], char input_binary[16], char filename[]) {
-	int address = 1000;
+void decode_opsetg1(char input_instr[], char input_binary[16],  unsigned int address) {
+	//char testarr[] = { '1','0','1','0','1','0','1','0','1','0','1','0','1','0','1','0' };
+
+	//printf("Expectation is 43690. Reality is: %d \n", binary_to_decimal(testarr));
+	printf("This is the input binary: %s \n", input_binary);
+
+	//int address = 4102;
 	//declare instruction to be decoded by end
 	char decoded_instr[10];
 	//declare signed bit
 	char signed_bit = input_binary[6];
 	
-	printf("Is this where?");
-
+	printf("This is the signed bit: %c \n", signed_bit);
 	//extend signed bit to bits 10 - 15
 	for (int i = 0; i < 6; i++) {
 		input_binary[i] = signed_bit;
 	}
 	
+	printf("This is after the signed bit is extended: %s \n", input_binary);
+
 	//shift result left by 1
 	char shifted_instr[16];
 	shifted_instr[15] = '0';
@@ -43,10 +49,11 @@ void decode_opsetg1(char input_instr[], char input_binary[16], char filename[]) 
 	int input_bit, shifted_bit;
 	//store the offsetted instruction in shifted_instr array
 	for (input_bit = 1, shifted_bit = 0; input_bit < 16; input_bit++, shifted_bit++) {
-		shifted_instr[shifted_bit] = input_instr[input_bit];
+		shifted_instr[shifted_bit] = input_binary[input_bit];
 
 	}
 
+	printf("This is the shifted instruction: %s \n", shifted_instr);
 	//determine add or subtract
 	
 	char twos_arr[16];
@@ -64,8 +71,11 @@ void decode_opsetg1(char input_instr[], char input_binary[16], char filename[]) 
 			}
 		}
 
+		printf("This is the twos array: %s", twos_arr);
 		//convert the binary to a decimal value
 		offset_by = -(binary_to_decimal(twos_arr)+1);
+
+		printf("This is the total offset: %d", offset_by);
 	}	
 	else if (signed_bit == '0') {
 		//bra has a positive value in the range 0 (#0000) to 1022(#03FE)
@@ -79,7 +89,8 @@ void decode_opsetg1(char input_instr[], char input_binary[16], char filename[]) 
 	unsigned int pc = address + 2;
 	printf("address 2 (offset): %04x \n", pc);
 	//fflush(stdout);
-	unsigned int branch_to = offset_by + pc;
+	printf("Offset: %d \n", offset_by);
+	unsigned int branch_to = pc+offset_by;
 	char target_addr[5];
 	sprintf(target_addr, "#%04x", branch_to);
 	printf("address 3 (target address): %04x \n", branch_to);
@@ -88,21 +99,20 @@ void decode_opsetg1(char input_instr[], char input_binary[16], char filename[]) 
 	sprintf(decoded_instr, "%s %s", input_instr, target_addr);
 	//puts("BRA was triggered.");
 
-	append_file(filename, decoded_instr);
+	append_file(decoded_instr);
 	printf(decoded_instr);
 
 
 }
 
 //bl
-void decode_opsetg2(char input_instr[], char input_binary[16], char filename[]) {
-	int address = 1000;
+void decode_opsetg2(char input_instr[], char input_binary[16],  unsigned int address) {
+	//int address = 1000;
 	//declare instruction to be decoded by end
 	char decoded_instr[10];
 	//declare signed bit
 	char signed_bit = input_binary[3];
 
-	printf("Is this where?");
 
 	//extend signed bit to bits 13 - 15
 	for (int i = 0; i < 3; i++) {
@@ -161,7 +171,7 @@ void decode_opsetg2(char input_instr[], char input_binary[16], char filename[]) 
 	sprintf(decoded_instr, "%s %s", input_instr, target_addr);
 	//puts("BRA was triggered.");
 
-	append_file(filename, decoded_instr);
+	append_file( decoded_instr);
 	printf(decoded_instr);
 
 
