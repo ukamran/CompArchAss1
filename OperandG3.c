@@ -1,5 +1,5 @@
 /**
-* This file is used to decode the following operand: cex, setpri, svc.
+* This file is used to decode the following operands: cex, setpri, svc.
 */
 
 #include <stdio.h>

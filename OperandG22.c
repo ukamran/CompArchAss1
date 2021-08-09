@@ -12,8 +12,8 @@
 
 
 void decode_reg_g22(char r_bits[3], char* decoded_reg) {
-	const char* rc_possible_bits[] = { "000","001","010","011","100","101","110","111" };
-	const char* r_outputs[] = { "R0","R1","R2","R3","R4","R5","R6","R7" };
+	const char* rc_possible_bits[] = { "000","001","010","011","100","101","110","111",0 };
+	const char* r_outputs[] = { "R0","R1","R2","R3","R4","R5","R6","R7",0 };
 	char reg_val[2];
 
 	int counter = 0;
@@ -29,15 +29,17 @@ void decode_reg_g22(char r_bits[3], char* decoded_reg) {
 	}
 
 
-	for (int i = 0; i < 2; i++) {
+	for (int i = 0; i < 3; i++) {
 		decoded_reg[i] = reg_val[i];
 	}
+	decoded_reg[2] = 0;
 
 }
 
 char to_hex_g22(char bin_bits[4]) {
-	const char* bin_possible_bits[] = { "000","001","010","011","100","101","110","111",0 };
-	char hex_outputs[9] = { '0','1','2','3','4','5','6','7',0 };
+	bin_bits[3] = 0;
+	const char* bin_possible_bits[] = { "000","001","010","011","100","101","110","111",0};
+	char hex_outputs[9] = { '0','1','2','3','4','5','6','7',0};
 	char hex_val;
 
 	int counter = 0;
@@ -49,7 +51,7 @@ char to_hex_g22(char bin_bits[4]) {
 		counter++;
 	}
 	if (counter >= 8) {
-		printf("There is an error");
+		printf("There is an error\n");
 	}
 	else {
 		hex_val = hex_outputs[counter];
@@ -61,33 +63,47 @@ char to_hex_g22(char bin_bits[4]) {
 void prpo_decision(char prpo[4], char reg[3], char* complete_reg) {
 
 	char prpo_val = to_hex_g22(prpo);
+	printf("This is the prpo val. Expected 0. Result: %c \n", prpo_val);
 	char temp[5];
+	int null_val=2; //default null
 	switch (prpo_val) {
 	case '0':
 		//do nothing
+		printf("It goes to case 0. \n");
 		strcpy(temp, reg);
+		break;
 	case '5':
 		//pre-increment
+		null_val = 3;
 		sprintf(temp, "+%s", reg);
+		break;
 	case '1':
 		//post-increment
-		sprintf(temp, "+%s", reg);
+		null_val = 3;
+		sprintf(temp, "%s+", reg);
+		break;
 	case '6':
 		//pre-decrement
+		printf("It goes to case 6. \n");
+		null_val = 3;
 		sprintf(temp, "-%s", reg);
+		break;
 	case '2':
 		//post-decrement
+		printf("It goes to case 2. \n");
+		null_val = 3;
 		sprintf(temp, "%s-", reg);
+		break;
 	default:
-		//invalid
+		printf("Invalid prpo \n");
 		strcpy(temp, "inv");
-		printf("Invalid entry!");
+		break;
 	}
 	
 	for (int i = 0; i < 4; i++) {
 		complete_reg[i] = temp[i];
 	}
-
+	complete_reg[null_val] = 0;
 }
 
 /*
@@ -106,7 +122,7 @@ void w_or_b(char WB, char* decoded_wb) {
 
 
 
-//ldr, str
+//ld, st
 void decode_opsetg22(char input_instr[], char input_binary[16], unsigned int address) {
 
 	//Store the Destination bits
@@ -133,10 +149,12 @@ void decode_opsetg22(char input_instr[], char input_binary[16], unsigned int add
 
 	//store the destination register
 	decode_reg_g22(D, decoded_dreg);
-
+	decoded_dreg[2] = 0;
+	printf("This is the decoded D Register %s\n", decoded_dreg);
 	//store the source register
 	decode_reg_g22(SC, decoded_sreg);
-
+	printf("This is the decoded S Register %s\n", decoded_sreg);
+	decoded_sreg[2] = 0;
 
 	switch (st_ld) {
 	case '0':
@@ -148,7 +166,10 @@ void decode_opsetg22(char input_instr[], char input_binary[16], unsigned int add
 	case '1':
 		//this is a st instruction. ergo, the destination register is modified.
 		prpo_decision(prpo_bits, decoded_dreg, complete_dreg);
+		printf("This is the destination register: %s\n", complete_dreg);
 		strcpy(complete_sreg, decoded_sreg);
+		printf("This is the source register: %s\n", complete_sreg);
+
 		break;
 	default:
 		//there is an error. must be 0 or 1.
@@ -156,6 +177,7 @@ void decode_opsetg22(char input_instr[], char input_binary[16], unsigned int add
 	}
 
 	//word or byte instruction
+	decoded_wb[2] = 0;
 	w_or_b(WB, decoded_wb);
 	strcat(input_instr, decoded_wb);
 

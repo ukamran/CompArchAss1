@@ -62,7 +62,7 @@ void decode_opsetg6(char input_instr[], char input_binary[16], unsigned int addr
 		output[counter] = output_c;
 		counter++;
 	}
-
+	output[counter] = 0;
 	
 	//construct instruction
 	sprintf(decoded_instr, "%s %s", input_instr, output);

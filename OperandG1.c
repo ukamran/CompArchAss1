@@ -126,7 +126,7 @@ void decode_opsetg2(char input_instr[], char input_binary[16],  unsigned int add
 	int input_bit, shifted_bit;
 	//store the offsetted instruction in shifted_instr array
 	for (input_bit = 1, shifted_bit = 0; input_bit < 16; input_bit++, shifted_bit++) {
-		shifted_instr[shifted_bit] = input_instr[input_bit];
+		shifted_instr[shifted_bit] = input_binary[input_bit];
 
 	}
 
@@ -161,6 +161,7 @@ void decode_opsetg2(char input_instr[], char input_binary[16],  unsigned int add
 	//fflush(stdout);
 	unsigned int pc = address + 2;
 	printf("address 2 (offset): %04x \n", pc);
+	printf("Offset: %d \n", offset_by);
 	//fflush(stdout);
 	unsigned int branch_to = offset_by + pc;
 	char target_addr[5];

@@ -53,6 +53,8 @@ void decode_reg(char r_bits[3], char* decoded_reg) {
 	for (int i = 0; i < 2; i++) {
 		decoded_reg[i] = reg_val[i];
 	}
+	decoded_reg[2] = 0;
+
 
 }
 void w_or_b(char WB, char* decoded_wb) {
@@ -105,6 +107,13 @@ void decode_opset1(char input_instr[], char input_binary[16]) {
 	w_or_b(WB, decoded_wb);
 
 	strcat(input_instr, decoded_wb);
+
+	if (input_instr[5] == 'w' || input_instr[5] == 'b') {
+		input_instr[6] = 0;
+	}
+	else {
+		input_instr[5] = 0;
+	}
 	//construct instruction
 	sprintf(decoded_instr, "%s %s,%s", input_instr, decoded_sc, decoded_dreg);
 	
@@ -195,7 +204,7 @@ void decode_opsetg23(char input_instr[], char input_binary[16]) {
 	//word or byte instruction
 	w_or_b(WB, decoded_wb);
 	strcat(input_instr, decoded_wb);
-
+	input_instr[5] = 0;
 
 	//construct instruction
 	sprintf(decoded_instr, "%s %s,%s", input_instr, decoded_sreg, decoded_dreg);

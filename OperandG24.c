@@ -21,7 +21,6 @@ int binary_to_decimal_7bit(char input[7]) {
 }
 
 
-
 //ldr str instructions
 void decode_opsetg24(char input_instr[], char input_binary[16],  unsigned int address) {
 
@@ -66,9 +65,14 @@ void decode_opsetg24(char input_instr[], char input_binary[16],  unsigned int ad
 		//bra has a positive value in the range 0  to 64
 		offset_by = binary_to_decimal_7bit(offset);
 	}
-	
-	char offset_char = offset_by + '0'; //convert to a character
-	char offset_instr[2] = { '#',offset_char };
+	char offset_instr[2];
+
+	sprintf(offset_instr, "#%d", offset_by);
+	//printf("This is the offset integer: %d \n", offset_by);
+	//char offset_char = offset_by + '0'; //convert to a character
+	//printf("This is the offset integer after character conversion: %c \n", offset_char);
+
+	//char offset_instr[2] = { '#',offset_char };
 
 	//declare decoded vars
 	char decoded_sc[3];
@@ -86,6 +90,7 @@ void decode_opsetg24(char input_instr[], char input_binary[16],  unsigned int ad
 	w_or_b(WB, decoded_wb);
 
 	strcat(input_instr, decoded_wb);
+	input_instr[5] = 0;
 
 	//if 0, ldr. if 1, it's str.
 	if (ldrstr == '0') {

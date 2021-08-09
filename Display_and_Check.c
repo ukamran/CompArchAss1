@@ -1,4 +1,6 @@
 /*
+* 
+* This file has been modified from the original file provided by Dr Hughes.
  Display_fields_and_check
  - Display contents of each SRecord field
  - Determine checksum: length + addr-high + addr-low + data-bytes + chksum-byte
@@ -19,7 +21,7 @@
 	 Address is stored in big-endian format
    - Data bytes are represented by two chars in srec starting at srec[8 & 9]
  - ECED 3403
- - 14 May 2021
+ - 09 August 2021
 */
 #include <stdio.h>
 #include <ctype.h>
@@ -30,23 +32,7 @@
 
 #define DISPLAY_BYTE /* Remove comments '//' to display contents of S1 and S9 records */
 
-/*
-int hextodc(char* hex) {
-	int y = 0;
-	int dec = 0;
-	int x, i;
-	for (i = strlen(hex) - 1; i >= 0; --i){
-		if (hex[i] >= '0' && hex[i] <= '9') {
-			x = hex[i] - '0';
-		}
-		else {
-			x = hex[i] - 'A' + 10;
-		}
-	dec = dec + x * pow(16, y);// converting hexadecimal to integer value ++y;
-	}
-return dec;
-}
-**/
+
 void display_and_check_srec(char* srec)
 {
 /*
@@ -62,7 +48,6 @@ unsigned int chksum;
 unsigned int pos;
 unsigned int i;
 
-//added this just now
 unsigned int arr_count;
 unsigned int counter;
 unsigned int addr; 
@@ -72,7 +57,9 @@ unsigned int arr[40];
 unsigned int address_arr[40];
 
 
-char filename[100];
+char filename[100]; //filename array declaration
+char org_arr[10]; //origin
+
 
 /* Check for 'S' (srec[0]) */
 if (srec[0] != 'S')
@@ -111,40 +98,27 @@ case '0': /* Source filename */
 	{
 
 		sscanf_s(&srec[pos], "%2x", &byte);
-		//printf("This is the byte: %d", byte);
 		char bytechar = byte;
-		filename[i] = bytechar;
-		//printf("%c", bytechar);
-		//char parsedRecord[] = "Cool.";
-		//output_file(byte);
+		filename[i] = bytechar; //store the filename
 		chksum += CHAR_MASK(byte);
 		pos += 2;
 	}
 
 	filename[i - 1] = '\0'; //null terminate to avoid special characters at the end
-	/*
-	int counter = 0;
-	while (filename_temp[counter] != '\0') {
-		counter++;
-	}
-	printf("Length: %d \n", counter);
-	for (int i = 0; i < (counter + 1); i++) {
-		printf("%c", filename_temp[i]);
-	}
-	*/
-	printf(" This is the filename in S0: %s", filename);
-	create_file(filename, length);
+	create_file(filename, length); //create the file with the provided name
 
 	break;
 
 case '1': /* Data (Instruction or data) record */
 	/* Print first address and bytes */
-	//printf(" This is the filename in S1 at start: %s", filename);
-
+	
 	arr_count = 0;
 	counter = 0;
 	int max_length = length;
 	printf("Address: %04x: ", address);
+	sprintf(org_arr, "ORG #%04x", address);
+	append_file(org_arr);
+
 	interim_address = address;
 	unsigned int final_pos = pos + (length - 3) * 2;
 
@@ -156,53 +130,7 @@ case '1': /* Data (Instruction or data) record */
 		//printf("This is for S1: %02x \n", byte);
 #endif
 		chksum += CHAR_MASK(byte);
-		/**
-			printf("This is the array: %2x\n", arr[arr_count]);
-
-			if ((i%2)==0) {
-				counter = 0;
-			}
-			s1_arrass[counter] = byte;
-
-			printf("Array counter: %d\n", arr_count);
-			printf("i: %d, length: %d\n", i, length);
-
-			if (((pos % 4) == 0) && (pos!=8)) {
-				//decodeAssembly(s1_arr);
-				printf("pos: %d\n", pos);
-				unsigned int loop;
-				char high[2];
-				char low[2];
-				//for (loop = 0; loop < 2; loop += 1) {
-					printf("High: %02x ,", s1_arrass[1]);
-					printf("Low: %02x ,", s1_arrass[0]);
-					//printf(high, "%02x", s1_arrass[1]);
-					//sprintf(low, "%02x", s1_arrass[0]);
-					//printf("High: %c", high);
-					//printf();
-					//printf("Low: %c", low);
-					//printf();
-					//int high_int = high - '0';
-					//int low_int = low - '0';
-
-					//printf("High int: %d", high_int);
-					//printf("Low int: %d", low_int);
-
-					//printf("First char high: ");
-					//printf(high[0]);
-					//printf("Second char high: ");
-					//printf(high[1]);
-					//printf("Third char low: ");
-					//printf(low[0]);
-
-					//decode_assembly(s1_arrass[1], s1_arrass[0]);
-					printf("Address: #%04x \n", interim_address);
-					//decode_assembly(s1_arrass[1], s1_arrass[0], interim_address, filename);
-					counter = 0;
-				//}
-				}
-		**/
-		//my code
+			//my code
 		address_arr[i] = interim_address;
 		arr[i] = byte;
 
@@ -220,9 +148,6 @@ case '1': /* Data (Instruction or data) record */
 	int count_up = 0;
 	int count_up_h = 1;
 
-	//decode_assembly(arr[1], arr[0], 1000, filename);
-	//decode_assembly(arr[3], arr[2], 1000, filename);
-	//decode_assembly(arr[5], arr[4], 1, filename);
 	
 	
 	for (count_up = 0; count_up < i; count_up++) {
@@ -231,9 +156,7 @@ case '1': /* Data (Instruction or data) record */
 
 		if ((count_up % 2) == 0 && (count_up != i - 1)) {
 			printf("count up mod: %d\n", count_up);
-	//		printf("This is low: %d and high:%d\n", count_up, count_up_h);
 			printf("%04x \n", address_arr[count_up]);
-			//printf("This is the filename: %s \n", filename);
 			decode_assembly(arr[count_up +1], arr[count_up], address_arr[count_up]);
 		}
 		count_up++;

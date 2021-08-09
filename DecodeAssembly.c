@@ -113,13 +113,10 @@ void binary(char input_hex, char* output_binary) {
 
 int handle_two(int second_char, int third_char) {
 	if (second_char < 4) {
-		printf("Get here?\n");
 		return 1; //BRA
 	}
-	else if ((second_char > 4) ) {
-		if (third_char < 8) {
+	else if ((second_char>=4 && second_char<8) ) {
 			return 2; //CEX
-		}
 	}	
 	else if ((second_char == 8) && (third_char ==0)) {
 		return 3; //SETPRI
@@ -128,10 +125,10 @@ int handle_two(int second_char, int third_char) {
 		return 4; //SVC
 	}
 	else if (second_char == 8) {
-		if (third_char >= 2 || third_char < 4) {
+		if (third_char >= 2 && third_char < 4) {
 			return 5; //SETCC
 		}
-		else if (third_char >= 4) {
+		else if (third_char == 4 || third_char==5) {
 			return 6; //CLRCC
 		}
 	}
@@ -141,7 +138,7 @@ int handle_two(int second_char, int third_char) {
 
 }
 
-int handle_four(int second_char, int third_char) {
+int handle_four(int second_char, int third_char, int fourth_char) {
 	switch (second_char) {
 	case 0:
 		return 7; //ADD
@@ -180,29 +177,36 @@ int handle_four(int second_char, int third_char) {
 		if (third_char < 8) {
 			return 18; //MOV
 		}
-		else {
+		else if (third_char>=8 && third_char<12) {
 			return 19; //SWAP
 		}
 		break;
 	case 13:
-		if (third_char < 8) {
+		if (third_char == 0 || third_char == 4) {
 			return 20; //SRA
 		}
-		else {
+		else if (third_char == 8 || third_char == 12) {
 			return 21; //RRC
+		}
+		else {
+			printf("Invalid! \n");
 		}
 		break;
 	case 14:
-		if (third_char < 8) {
+		if (third_char == 0 && fourth_char< 8) {
 			return 22; //SWPB
 		}
-		else {
+		else if (third_char==0 && fourth_char>=8) {
 			return 23; //SXT
+		}
+		else {
+			printf("Invalid! \n");
 		}
 		break;
 	
 	default:
-		printf("Invalid!");
+		printf("Invalid! \n");
+		break;
 	}
 	
 }
@@ -229,6 +233,7 @@ void decode_assembly(int low, int high, unsigned int address) {
 	int first_char = hex_10(lowhex[0]);
 	int second_char = hex_10(lowhex[1]);
 	int third_char = hex_10(highhex[0]);
+	int fourth_char = hex_10(highhex[1]);
 
 	printf("Vars declared\n");
 	char bin_first[4];
@@ -268,6 +273,7 @@ void decode_assembly(int low, int high, unsigned int address) {
 	printf("First char: %d \n", first_char);
 	printf("Second char: %d \n", second_char);
 	printf("Third char: %d \n", third_char);
+	printf("Fourth char: %d \n", fourth_char);
 
 
 	const char *inst[] = { "BL","BRA","CEX","SETPRI","SVC","SETCC","CLRCC","ADD","ADDC","SUB","SUBC","DADD","CMP",
@@ -279,15 +285,22 @@ void decode_assembly(int low, int high, unsigned int address) {
 	//int second_char = 2;
 	//int third_char = 3;
 	switch (first_char) {
-	case 9:
+	case 12:
+	case 13:
+	case 14:
+	case 15:
 		instr_from_arr = 31;
 		printf(inst[31]); //str
 		break;
 	case 0:
+	case 1:
 		instr_from_arr = 0;
 		printf(inst[0]); //bl
 		break;
 	case 8:
+	case 9:
+	case 10:
+	case 11:
 		instr_from_arr = 30;
 		printf(inst[30]); //ldr
 		break;
@@ -300,21 +313,29 @@ void decode_assembly(int low, int high, unsigned int address) {
 		printf(inst[instr_from_arr]);
 		break;
 	case 5:
-		second_char > 8 ? (instr_from_arr = 25) : (instr_from_arr = 24); //st, ld
+		if (second_char >= 12) {
+			instr_from_arr = 25; //st
+		}
+		else if (second_char >= 8 && second_char < 12) {
+			instr_from_arr = 24; //ld
+		}
+		else {
+			printf("Invalid"); //can't be less than 8
+		}
+		//second_char >= 12 ? (instr_from_arr = 25) : (instr_from_arr = 24); //st, ld
 		printf(inst[instr_from_arr]);
-
 		break;
 	case 2:
-		printf("At this point?");
 		instr_from_arr = handle_two(second_char, third_char);
 		printf(inst[handle_two(second_char, third_char)]);
 		break;
 	case 4:
-		instr_from_arr = handle_four(second_char, third_char);
-		printf(inst[handle_four(second_char, third_char)]);
+		instr_from_arr = handle_four(second_char, third_char, fourth_char);
+		printf(inst[handle_four(second_char, third_char, fourth_char)]);
 		break;
 	default:
 		printf("Invalid!");
+		break;
 	};
 
 	char opset1[4];

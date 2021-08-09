@@ -66,6 +66,7 @@ void decode_opsetg10(char input_instr[], char input_binary[16],  unsigned int ad
 	//determine word or byte and concatenate with instruction
 	w_or_bg10(WBg10, decoded_wb);
 	strcat(input_instr, decoded_wb);
+	input_instr[5] = 0;
 	//store the destination register
 	decode_regg10(D, decoded_dregg10);
 

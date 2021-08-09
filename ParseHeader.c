@@ -1,4 +1,5 @@
 /*
+* This file and its contents have been used as is from the template provided by Dr Larry Highes.
  Display_fields_and_check
  - Display contents of each SRecord field
  - Determine checksum: length + addr-high + addr-low + data-bytes + chksum-byte

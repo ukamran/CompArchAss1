@@ -1,5 +1,5 @@
 /*
- Module 1c: Display file contents
+ This file has been used as is from the template provided by Dr Larry Hughes.
  Display the contents (records) of a file
  ECED 3403
  14 May 2021
